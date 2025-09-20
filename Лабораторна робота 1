@@ -1,0 +1,79 @@
+# ЛР1. Варіант 19
+data = [80, 27, 37, 36, 91, 53, 86, 66, 98]
+
+
+def selection_sort(arr):
+    n = len(arr)
+    comparisons = 0
+    assignments = 0
+
+    print("\n--- Трасування Selection Sort ---")
+    for i in range(n - 1):
+        min_index = i
+        assignments += 1
+
+        for j in range(i + 1, n):
+            comparisons += 1
+            if arr[j] < arr[min_index]:
+                min_index = j
+                assignments += 1
+
+        if min_index != i:
+            # обмін елементів
+            arr[i], arr[min_index] = arr[min_index], arr[i]
+            assignments += 3
+
+        print(f"Ітерація {i}: {arr}")
+
+    print("--- Кінець трасування Selection Sort ---")
+    return arr, comparisons, assignments
+
+
+def insertion_sort(arr):
+    n = len(arr)
+    comparisons = 0
+    assignments = 0
+
+    print("\n--- Трасування Insertion Sort ---")
+    for i in range(1, n):
+        key = arr[i]
+        assignments += 1
+        j = i - 1
+        assignments += 1
+
+        print(f"\nІтерація {i}: вставка {key}")
+
+        while j >= 0 and arr[j] > key:
+            comparisons += 1
+            arr[j + 1] = arr[j]
+            assignments += 1
+            j -= 1
+            assignments += 1
+            print(f"  Зсув: {arr}")
+
+        if j >= 0:
+            comparisons += 1
+
+        arr[j + 1] = key
+        assignments += 1
+        print(f"  Вставка {key} -> {arr}")
+
+    print("--- Кінець трасування Insertion Sort ---")
+    return arr, comparisons, assignments
+
+
+# Копії масиву для обох алгоритмів
+arr1 = data.copy()
+arr2 = data.copy()
+
+# Сортування вибором
+sorted_sel, comps_sel, assigns_sel = selection_sort(arr1)
+print("\nРезультат Selection Sort:", sorted_sel)
+print("Кількість порівнянь:", comps_sel)
+print("Кількість присвоєнь:", assigns_sel)
+
+# Сортування вставками
+sorted_ins, comps_ins, assigns_ins = insertion_sort(arr2)
+print("\nРезультат Insertion Sort:", sorted_ins)
+print("Кількість порівнянь:", comps_ins)
+print("Кількість присвоєнь:", assigns_ins)
