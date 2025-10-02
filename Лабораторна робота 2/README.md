@@ -1,7 +1,8 @@
+```
 # ЛР. 2. Варіант 19.
 # Python-код ітеративної реалізації алгоритму сортування злиттям.
 
-```
+
 def merge_sort_iterative(a):
     n = len(a)
     comparisons = 0
