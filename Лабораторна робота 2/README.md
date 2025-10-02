@@ -1,6 +1,7 @@
 # ЛР. 2. Варіант 19.
 # Python-код ітеративної реалізації алгоритму сортування злиттям.
 
+```
 def merge_sort_iterative(a):
     n = len(a)
     comparisons = 0
@@ -73,3 +74,4 @@ sorted_list, comps, assigs = merge_sort_iterative(my_list.copy())
 print("Відсортований список:", sorted_list)
 print(f"Кількість порівнянь: {comps}")
 print(f"Кількість присвоювань: {assigs}")
+```
