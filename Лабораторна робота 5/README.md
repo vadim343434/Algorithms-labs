@@ -77,5 +77,133 @@ int main() {
 }
 
 
+# Лістинг 5.2 – Код реалізації програми алгоритму Крускала.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+#define edge pair<int,int>
+
+class Graph {
+private:
+    vector<pair<int, edge>> G; // graph
+    vector<pair<int, edge>> T; // mst
+    int *parent;
+    int V; // number of vertices in graph
+public:
+    Graph(int V);
+    void AddWeightedEdge(int u, int v, int w);
+    int find_set(int i);
+    void union_set(int u, int v);
+    void kruskal();
+    void print();
+};
+
+Graph::Graph(int V) {
+    this->V = V;
+    parent = new int[V];
+    for (int i = 0; i < V; i++)
+        parent[i] = i;
+    G.clear();
+    T.clear();
+}
+
+void Graph::AddWeightedEdge(int u, int v, int w) {
+    G.push_back(make_pair(w, edge(u, v)));
+}
+
+int Graph::find_set(int i) {
+    if (i == parent[i])
+        return i;
+    else
+        return find_set(parent[i]);
+}
+
+void Graph::union_set(int u, int v) {
+    parent[u] = parent[v];
+}
+
+void Graph::kruskal() {
+    int i, uRep, vRep;
+    sort(G.begin(), G.end()); // increasing weight
+    for (i = 0; i < (int)G.size(); i++) {
+        uRep = find_set(G[i].second.first);
+        vRep = find_set(G[i].second.second);
+
+        if (uRep != vRep) {
+            T.push_back(G[i]); // add to tree
+            union_set(uRep, vRep);
+        }
+    }
+}
+
+void Graph::print() {
+    cout << "Edge : Weight" << endl;
+    for (int i = 0; i < (int)T.size(); i++) {
+        cout << T[i].second.first << " - "
+             << T[i].second.second << " : "
+             << T[i].first << endl;
+    }
+}
+
+int main() {
+    Graph g(8);
+
+    // 1–3 (2)
+    g.AddWeightedEdge(0, 2, 2);
+    g.AddWeightedEdge(2, 0, 2);
+
+    // 3–8 (4)
+    g.AddWeightedEdge(2, 7, 4);
+    g.AddWeightedEdge(7, 2, 4);
+
+    // 8–6 (3)
+    g.AddWeightedEdge(7, 5, 3);
+    g.AddWeightedEdge(5, 7, 3);
+
+    // 6–7 (5)
+    g.AddWeightedEdge(5, 6, 5);
+    g.AddWeightedEdge(6, 5, 5);
+
+    // 7–8 (5)
+    g.AddWeightedEdge(6, 7, 5);
+    g.AddWeightedEdge(7, 6, 5);
+
+    // 6–5 (4)
+    g.AddWeightedEdge(5, 4, 4);
+    g.AddWeightedEdge(4, 5, 4);
+
+    // 5–7 (7)
+    g.AddWeightedEdge(4, 6, 7);
+    g.AddWeightedEdge(6, 4, 7);
+
+    // 5–4 (1)
+    g.AddWeightedEdge(4, 3, 1);
+    g.AddWeightedEdge(3, 4, 1);
+
+    // 4–1 (4)
+    g.AddWeightedEdge(3, 0, 4);
+    g.AddWeightedEdge(0, 3, 4);
+
+    // 1–2 (6)
+    g.AddWeightedEdge(0, 1, 6);
+    g.AddWeightedEdge(1, 0, 6);
+
+    // 2–4 (6)
+    g.AddWeightedEdge(1, 3, 6);
+    g.AddWeightedEdge(3, 1, 6);
+
+    // 2–6 (6)
+    g.AddWeightedEdge(1, 5, 6);
+    g.AddWeightedEdge(5, 1, 6);
+
+    g.kruskal();
+    g.print();
+
+    return 0;
+}
+
 
 ```
