@@ -67,4 +67,4 @@ sorted_A = heapsort(A)
 print(f"Відсортований масив: {sorted_A}")
 
 
-```
+
