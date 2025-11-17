@@ -1,5 +1,5 @@
 ```
-# Лістинг 1 – Код реалізації алгоритму сортування купою
+# Лістинг 1 – Код реалізації алгоритму Дейкстри.
 
 #include <stdio.h>
 
@@ -122,3 +122,71 @@ int main(void) {
     return 0;
 }
 
+# Лістинг 2 – Код реалізації алгоритму Флойда.
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    const int N = 8;
+    const int INF = 1000000000;
+
+    // Початкова вагова матриця W для графа варіанта 19
+    int W[N][N] = {
+        // 1    2    3    4    5    6    7    8
+        {   0,   6,   2,   4, INF, INF, INF, INF}, // 1
+        {   6,   0, INF,   6, INF,   6, INF, INF}, // 2
+        {   2, INF,   0, INF, INF, INF, INF,   4}, // 3
+        {   4,   6, INF,   0,   1, INF, INF, INF}, // 4
+        { INF, INF, INF,   1,   0,   4,   7, INF}, // 5
+        { INF,   6, INF, INF,   4,   0,   5,   3}, // 6
+        { INF, INF, INF, INF,   7,   5,   0,   5}, // 7
+        { INF, INF,   4, INF, INF,   3,   5,   0}  // 8
+    };
+
+    // Копія W в матрицю D
+    int D[N][N];
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            D[i][j] = W[i][j];
+        }
+    }
+
+    // Алгоритм Флойда
+    for (int k = 0; k < N; k++) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (D[i][k] < INF && D[k][j] < INF) {
+                    if (D[i][k] + D[k][j] < D[i][j]) {
+                        D[i][j] = D[i][k] + D[k][j];
+                    }
+                }
+            }
+        }
+    }
+
+    // Вивід результату
+    cout << "Матриця найкоротших відстаней D:" << endl;
+    cout << "      ";
+    for (int j = 0; j < N; j++) {
+        cout << setw(3) << j + 1;
+    }
+    cout << endl;
+
+    for (int i = 0; i < N; i++) {
+        cout << setw(3) << i + 1 << "  ";
+        for (int j = 0; j < N; j++) {
+            if (D[i][j] >= INF / 2) {
+                cout << setw(3) << "∞";
+            } else {
+                cout << setw(3) << D[i][j];
+            }
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+```
